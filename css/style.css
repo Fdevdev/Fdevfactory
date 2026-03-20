@@ -701,3 +701,38 @@ transform:scale(0.95);
   position: relative;
   z-index: 2;
 }
+
+@media (max-width: 768px) {
+  .logo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo span {
+    font-size: 14px;
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .cta-buttons {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .connect-wallet {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
