@@ -120,26 +120,18 @@ border-radius:8px;
 
 }
 
-.buy-btn, .chart{
-display:flex;
-align-items:center;
-justify-content:center;
+.buy-btn, .chart {
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
-width:190px;
-height:48px;
-padding:0 22px;
+  width:100%;
+  max-width:220px;
 
-font-size:14px;
-line-height:48px;
+  padding:12px 20px;
+  margin:20px auto 0;
 
-background:#ffae00;
-color:black;
-border-radius:10px;
-font-weight:bold;
-text-decoration:none;
-
-box-shadow:0 0 20px rgba(255,174,0,0.7);
-transition:0.3s;
+  box-sizing:border-box;
 }
 
 .buy-btn:hover, .chart:hover{
@@ -374,6 +366,8 @@ transition:0.3s;
 box-shadow:0 0 20px rgba(255,174,0,0.1);
 
 text-align: center;
+
+  box-sizing: border-box;
 
 }
 
