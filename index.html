@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FDEV - Factory Dev</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <img src="images/logo.webp" alt="FDEV logo">
+  <span>$FDEV</span>
+</div>
+
+<nav>
+<a href="#story">Factory Story</a>
+<a href="#tokenomics">Tokenomics</a>
+<a href="#roadmap">Roadmap</a>
+<a href="#buy">How to Buy</a>
+</nav>
+
+<button class="connect-wallet" onclick="connectWallet()">Connect Wallet</button>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-video">
+  <video autoplay muted loop playsinline>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="hero-overlay">
+
+<h1>$FDEV</h1>
+
+<div class="price-box">
+
+<p>Price: <span id="price">$0.0000</span></p>
+<p>Market Cap: <span id="mc">$0</span></p>
+
+<p class="contract">
+Contract:
+<span id="contract-address" data-full="CONTRACT ADDRESS">
+CONTRACT ADDRESS SHORT
+</span>
+<button id="copy-btn" onclick="copyContract()">Copy</button>
+</p>
+
+</div>
+
+<p>Build after shift.</p>
+
+<div class="hero-buttons">
+
+<a href="https://pump.fun/coin/CONTRACT ADDRESS" target="_blank" class="buy-btn">BUY ON PUMP.FUN</a>
+
+<a href="#chart" class="chart">VIEW CHART</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="story" class="story reveal">
+
+<div class="story-container">
+
+<div class="story-text">
+
+<h2>The Meme Experiment Network</h2>
+
+<p>$FDEV starts as an experiment.</p>
+
+<p>But the factory has a bigger plan.</p>
+
+<p>In the future, the Factory will become a place where anyone can:</p>
+
+<ul>
+<li>Create memes</li>
+<li>Launch meme experiments</li>
+<li>Test ideas with the community</li>
+</ul>
+
+<p>Some experiments will fail.</p>
+
+<p>But the ones that survive...</p>
+
+<p><strong>become culture.</strong></p>
+
+</div>
+
+<div class="story-image">
+
+<img src="images/monkey-factory.jpg">
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="tokenomics" class="tokenomics reveal">
+
+<h2 class="section-title">Tokenomics</h2>
+
+<div class="tokenomics-grid">
+
+<div class="token-card">
+<h3>Total Supply</h3>
+<p>
+1,000,000,000 $FDEV<br>
+Factory production limit.
+</p>
+</div>
+
+<div class="token-card">
+<h3>Zero Tax</h3>
+<p>
+0% Buy Tax<br>
+0% Sell Tax<br>
+Built for the community.
+</p>
+</div>
+
+<div class="token-card">
+<h3>Fair Launch</h3>
+<p>
+No VC.<br>
+No insiders.<br>
+Built in public.
+</p>
+</div>
+
+<div class="token-card">
+<h3>Liquidity</h3>
+<p>
+Liquidity locked.<br>
+Factory powered market.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section id="roadmap" class="roadmap reveal">
+
+<h2 class="section-title">Factory Development Plan</h2>
+
+<div class="roadmap-grid">
+
+<div class="roadmap-card">
+<h3><span class="phase-icon">⚙️</span> Phase 1</h3>
+<p>The First Experiment</p>
+<p>
+Launch $FDEV.<br>
+Open Factory Telegram.<br>
+Release the Factory website.<br>
+Start building in public.
+</p>
+</div>
+
+<div class="roadmap-card">
+<h3><span class="phase-icon">🚀</span> Phase 2</h3>
+<p>Enter the Market</p>
+<p>
+DEX listing.<br>
+Apply for CoinGecko.<br>
+Apply for CoinMarketCap.<br>
+Grow the Factory community.
+</p>
+</div>
+
+<div class="roadmap-card">
+<h3><span class="phase-icon">🧪</span> Phase 3</h3>
+<p>Meme Experiments</p>
+<p>
+Community meme experiments.<br>
+Factory meme campaigns.<br>
+Expand the Factory ecosystem.
+</p>
+</div>
+
+<div class="roadmap-card">
+<h3><span class="phase-icon">🌐</span> Phase 4</h3>
+<p>Meme Network</p>
+<p>
+Meme experiment platform.<br>
+Community meme launches.<br>
+Meme factory tools.
+</p>
+</div>
+
+<div class="roadmap-card">
+<h3><span class="phase-icon">🏆</span> Phase 5</h3>
+<p>Beyond the Factory</p>
+<p>
+CEX listings.<br>
+Global meme expansion.<br>
+The factory never stops building.<br>
+The experiment continues.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section id="buy" class="buy-section reveal">
+
+<h2 class="section-title">How To Buy</h2>
+
+<div class="buy-grid">
+
+<div class="buy-card">
+
+<h3>1. Install Phantom</h3>
+
+<p>
+Download Phantom wallet and create your wallet.
+</p>
+
+</div>
+
+<div class="buy-card">
+
+<h3>2. Buy SOL</h3>
+
+<p>
+Buy SOL on an exchange and send it to your wallet.
+</p>
+
+</div>
+
+<div class="buy-card">
+
+<h3>3. Swap for $FDEV</h3>
+
+<p>
+Go to Pump.fun and swap SOL for $FDEV.
+</p>
+
+<a href="https://pump.fun/coin/CONTRACT ADDRESS" target="_blank" class="buy-btn">
+Buy $FDEV on Pump.fun
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="social reveal">
+
+  <h2 class="section-title">Join The Community</h2>
+
+  <p>Builders welcome. The factory never sleeps.</p>
+
+  <div class="social-buttons">
+
+    <a class="social-btn twitter" href="https://x.com/factory_fdev" target="_blank">
+      Twitter
+    </a>
+
+    <a class="social-btn telegram" href="https://t.me/yourgroup" target="_blank">
+      Telegram
+    </a>
+
+  </div>
+
+</section>
+
+
+<section id="chart" class="chart-section reveal">
+
+<h2 class="section-title">Factory Chart</h2>
+
+<p>Track the price of $FDEV in real time.</p>
+
+<div class="chart-box">
+
+<iframe 
+src="https://dexscreener.com/solana/CONTRACT ADDRESS"
+width="100%" 
+height="650"
+frameborder="0">
+</iframe>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>© 2026 FDEV — The Factory Never Sleeps</p>
+
+</footer>
+
+<script src="js/main.js"></script>
+
+
+<script>
+async function connectWallet() {
+
+if (window.solana && window.solana.isPhantom) {
+    try {
+
+        const resp = await window.solana.connect();
+        const walletAddress = resp.publicKey.toString();
+
+        document.querySelector(".connect-wallet").innerText =
+        walletAddress.slice(0,4) + "..." + walletAddress.slice(-4);
+
+    } catch (err) {
+        console.log("User rejected connection");
+    }
+
+} else {
+
+    window.open("https://phantom.app/", "_blank");
+
+}
+
+}
+</script>
+
+</body>
+</html>
