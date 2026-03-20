@@ -715,12 +715,33 @@ transform:scale(0.95);
 }
 
 @media (max-width: 768px) {
-  nav {
+
+  .navbar {
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo span {
     display: none;
   }
-}
 
-@media (max-width: 768px) {
+  nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  nav a {
+    font-size: 13px;
+  }
+
   .cta-buttons {
     display: flex;
     gap: 6px;
@@ -735,4 +756,5 @@ transform:scale(0.95);
     font-size: 12px;
     padding: 6px 10px;
   }
+
 }
