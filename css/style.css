@@ -766,17 +766,18 @@ transform:scale(0.95);
 }
 
 .icon-btn {
-  background: #111;
-  border: 1px solid #ffb300;
-  color: #ffb300;
-  padding: 6px 10px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #f5a623, #ffb300);
+  color: #000;
+  padding: 8px 14px;
+  border-radius: 12px;
   font-size: 12px;
   text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(255, 179, 0, 0.5);
   transition: 0.3s;
 }
 
 .icon-btn:hover {
-  background: #ffb300;
-  color: #000;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 179, 0, 0.9);
 }
