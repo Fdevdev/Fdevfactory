@@ -757,6 +757,19 @@ transform:scale(0.95);
     box-shadow: 0 0 10px rgba(255, 174, 0, 0.6);
   }
 
+  .nav-right {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .icon-btn,
+  .connect-wallet {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
 }
 
 .nav-right {
@@ -780,4 +793,31 @@ transform:scale(0.95);
 .icon-btn:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 0 25px rgba(255, 179, 0, 0.9);
+}
+
+@media (max-width: 768px) {
+
+  .hero-overlay {
+    padding: 20px;
+  }
+
+  .hero-overlay h1 {
+    font-size: 36px;
+  }
+
+  .price-box p {
+    font-size: 14px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .buy-btn,
+  .chart {
+    width: 100%;
+    text-align: center;
+  }
+
 }
