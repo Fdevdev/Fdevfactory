@@ -748,4 +748,35 @@ transform:scale(0.95);
     margin-top: 8px;
   }
 
+  .nav-right {
+    margin-top: 8px;
+  }
+
+  .icon-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 174, 0, 0.6);
+  }
+
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: #111;
+  border: 1px solid #ffb300;
+  color: #ffb300;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.icon-btn:hover {
+  background: #ffb300;
+  color: #000;
 }
