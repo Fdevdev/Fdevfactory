@@ -307,26 +307,12 @@ flex-wrap:wrap;
 
 }
 
-.roadmap-card{
-
-background:#151515;
-
-padding:30px;
-
-border-radius:12px;
-
-width:260px;
-flex: 1 1 260px;
-max-width: 300px;
-
-transition:0.3s;
-
-box-shadow:0 0 20px rgba(255,174,0,0.1);
+.roadmap-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
 }
 
 .roadmap-card:hover{
@@ -513,19 +499,17 @@ box-shadow:0 0 30px rgba(255,174,0,0.2);
   justify-content: center;
   align-items: center;
 
-  margin: 20px auto 0;  /* 🔥 DÒNG QUAN TRỌNG */
+  margin: 20px auto 0;
+  align-self: center;
 
   padding: 12px 24px;
 
   background: #ffae00;
   color: black;
 
-  text-decoration: none;
-
   border-radius: 8px;
 
   font-weight: bold;
-
   width: fit-content;
 }
 
