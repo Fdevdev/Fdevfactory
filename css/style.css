@@ -688,12 +688,13 @@ transform:scale(0.95);
   width: 100%;
   height: 100%;
   z-index: 0;
+  background: black;
 }
 
 .hero-video video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   opacity: 0.25;
 }
 
