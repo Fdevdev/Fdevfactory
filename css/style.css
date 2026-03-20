@@ -120,18 +120,36 @@ border-radius:8px;
 
 }
 
+.buy-btn {
+  background: linear-gradient(135deg, #ffae00, #ffd700);
+  box-shadow: 
+    0 0 10px #ffae00,
+    0 0 20px #ffae00,
+    0 0 40px rgba(255,174,0,0.8);
+}
+
 .buy-btn, .chart {
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  width:100%;
-  max-width:220px;
+  width: 100%;
+  max-width: 220px;
 
-  padding:12px 20px;
-  margin:20px auto 0;
+  margin: 20px auto 0;
+  padding: 12px 20px;
 
-  box-sizing:border-box;
+  background: #ffae00;
+  color: black;
+
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+
+  box-shadow: 0 0 20px rgba(255,174,0,0.7);
+
+  transition: 0.3s;
+  box-sizing: border-box;
 }
 
 .buy-btn:hover, .chart:hover{
