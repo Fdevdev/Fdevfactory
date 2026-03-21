@@ -95,26 +95,23 @@ function copyContract() {
     }, 1500);
 }
 
-let points = localStorage.getItem("points") || 0;
+let points = parseInt(localStorage.getItem("points")) || 0;
 document.getElementById("points").innerText = points;
 
-function completeTask(value) {
-  points = parseInt(points) + value;
+// TASK
+function completeTask(value, btn) {
+  if (btn.disabled) return;
+
+  btn.disabled = true; // chặn spam
+
+  points += value;
   localStorage.setItem("points", points);
   document.getElementById("points").innerText = points;
 }
 
-function completeTask(value) {
-  if (this.clicked) return;
-  this.clicked = true;
-
-  points = parseInt(points) + value;
-  localStorage.setItem("points", points);
-  document.getElementById("points").innerText = points;
-}
-
+// WORK (click game)
 function work() {
-  points = parseInt(points) + 1;
+  points += 1;
   localStorage.setItem("points", points);
   document.getElementById("points").innerText = points;
 
@@ -123,12 +120,12 @@ function work() {
   }
 }
 
+// COIN EFFECT
 function spawnCoin() {
   const coin = document.createElement("div");
   coin.className = "coin";
   coin.innerText = "💰";
 
-  // random vị trí ngang
   coin.style.left = Math.random() * window.innerWidth + "px";
   coin.style.bottom = "0px";
 
