@@ -104,23 +104,6 @@ h1 {
 
 </div>
 
-<script>
-let points = localStorage.getItem("points") || 0;
-document.getElementById("points").innerText = points;
-
-function completeTask(value) {
-  points = parseInt(points) + value;
-  localStorage.setItem("points", points);
-  document.getElementById("points").innerText = points;
-}
-
-function work() {
-  points = parseInt(points) + 1;
-  localStorage.setItem("points", points);
-  document.getElementById("points").innerText = points;
-}
-</script>
-
 <div id="coin-container"></div>
 
 <script src="js/main.js"></script>
