@@ -66,8 +66,6 @@ console.log(e);
 
 }
 
-}
-
 loadPrice();
 setInterval(loadPrice,10000);
 
@@ -112,7 +110,7 @@ function completeTask(value, btn) {
 
 // WORK (click game)
 function work() {
-  points += 1;
+  points = parseInt(points) + 1;
   localStorage.setItem("points", points);
   document.getElementById("points").innerText = points;
 
