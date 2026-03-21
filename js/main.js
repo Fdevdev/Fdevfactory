@@ -230,6 +230,27 @@ function produce(btn) {
   }, 1000);
 }
 
+// ===== USER NAME SYSTEM =====
+function saveName() {
+  const name = document.getElementById("usernameInput").value.trim();
+
+  if (name.length < 3) {
+    alert("Tên phải >= 3 ký tự");
+    return;
+  }
+
+  localStorage.setItem("username", name);
+  loadName();
+}
+
+function loadName() {
+  const name = localStorage.getItem("username") || "Guest";
+  document.getElementById("displayName").innerText = name;
+}
+
+// load khi vào web
+loadName();
+
 function updateUI() {
   document.querySelectorAll(".task").forEach((el) => {
     const text = el.innerText.toLowerCase();
@@ -260,20 +281,9 @@ function updateUI() {
 }
 
 function generateLeaderboard() {
-  const board = document.querySelector(".card:last-child");
+  const name = localStorage.getItem("username") || "YOU";
 
-  let html = "<h2>🏆 Leaderboard</h2>";
-
-  for (let i = 1; i <= 5; i++) {
-    const pts = Math.floor(Math.random() * 1000) + 100;
-    const addr = "0x" + Math.random().toString(16).substring(2, 6);
-
-    html += `<p>#${i} ${addr}... - ${pts} pts</p>`;
-  }
-
-  html += `<p style="color:orange">#YOU - ${points} pts</p>`;
-
-  board.innerHTML = html;
+  html += `<p style="color:orange">👉 ${name} - ${points} pts</p>`;
 }
 
 generateLeaderboard();

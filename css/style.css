@@ -1006,3 +1006,15 @@ button:hover {
 button:active {
   transform: scale(0.95);
 }
+
+#usernameInput {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 10px;
+}
+
+#displayName {
+  color: #ffae00;
+  font-weight: bold;
+}
