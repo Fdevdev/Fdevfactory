@@ -57,7 +57,7 @@ width:100%;
 
 .hero{
   position: relative;
-  height: 100vh;
+  min-height: 40vh; /* hoặc 50vh nếu muốn gọn hơn */
 
   display:flex;
   align-items:center;
@@ -65,6 +65,10 @@ width:100%;
   text-align:center;
 
   overflow:hidden;
+  margin-top: -80px;
+  margin-bottom: -55px;
+  position: relative;
+  z-index: 3;
 
   animation: heroMove 40s infinite ease-in-out;
 }
@@ -75,7 +79,7 @@ width:100%;
 
 .hero-overlay{
 background:rgba(0,0,0,0.6);
-padding:40px;
+padding:15px;
 border-radius:12px;
 
 max-width:600px;
@@ -163,7 +167,7 @@ white-space:nowrap;
 
 section{
 
-padding:100px 10%;
+padding:60px 10%;
 
 }
 
@@ -192,7 +196,7 @@ background:#111;
 
 .story{
 
-padding:120px 10%;
+padding:50px 10%;
 background:#0e0e0e;
 
 }
@@ -237,9 +241,10 @@ box-shadow:0 0 30px rgba(255,174,0,0.4);
 
 .tokenomics{
 
-padding:120px 10%;
+padding:40px 10%;
 background:#080808;
 text-align:center;
+padding-top: 5px;
 
 }
 
@@ -302,9 +307,10 @@ line-height:1.6;
 
 .roadmap{
 
-padding:120px 10%;
+padding:50px 10%;
 background:#0e0e0e;
 text-align:center;
+padding-top: 5px;
 
 }
 
@@ -352,10 +358,10 @@ line-height:1.6;
 
 .buy-section{
 
-padding:120px 10%;
+padding:50px 10%;
 background:#080808;
 text-align:center;
-
+padding-top: 5px;
 }
 
 .buy-grid{
@@ -413,9 +419,10 @@ line-height:1.6;
 
 .social{
 
-padding:120px 10%;
+padding:40px 10%;
 background:#0e0e0e;
 text-align:center;
+padding-top: 5px;
 
 }
 
@@ -486,10 +493,10 @@ background:#ff5a00;
 
 .chart-section{
 
-padding:120px 10%;
+padding:80px 10%;
 background:#080808;
 text-align:center;
-
+padding-top: 5px;
 }
 
 .chart-box{
@@ -677,7 +684,7 @@ transform:scale(0.95);
   width: 100%;
   background: black;
   padding: 0;
-  margin-bottom: 0;
+  margin-bottom: -60px; /* kéo sát lại */
   overflow: hidden;
   border-radius: 12px;
 }
