@@ -78,20 +78,25 @@ h1 {
 
 <div class="card">
   <h2>⚡ Factory Work</h2>
-  <button onclick="work()">Produce $FDEV</button>
+  <button onclick="produce()">Produce $FDEV</button>
 </div>
+<div class="box">
+  <h3>🎯 Tasks</h3>
 
-<div class="card">
-  <h2>🎯 Tasks</h2>
+  <div class="task">
+    <p>Follow Twitter (+10)</p>
+    <button onclick="startTask(this, 'twitter')">Start</button>
+  </div>
 
-  <p>Follow Twitter (+10)</p>
-  <button onclick="completeTask(10, this)">Claim</button>
+  <div class="task">
+    <p>Join Telegram (+10)</p>
+    <button onclick="startTask(this, 'telegram')">Start</button>
+  </div>
 
-  <p>Join Telegram (+10)</p>
-  <button onclick="completeTask(10, this)">Claim</button>
-
-  <p>Retweet Post (+20)</p>
-  <button onclick="completeTask(20, this)">Claim</button>
+  <div class="task">
+    <p>Retweet Post (+20)</p>
+    <button onclick="startTask(this, 'retweet')">Start</button>
+  </div>
 
 </div>
 

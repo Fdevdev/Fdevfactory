@@ -102,31 +102,6 @@ if (pointsEl) {
   pointsEl.innerText = points;
 }
 
-// TASK
-function completeTask(value, btn) {
-  if (btn.disabled) return;
-
-  btn.disabled = true;
-  btn.innerText = "Done ✅";
-
-  points += value;
-  localStorage.setItem("points", points);
-
-  if (pointsEl) pointsEl.innerText = points;
-}
-
-// WORK
-function work() {
-  points += 1;
-  localStorage.setItem("points", points);
-
-  if (pointsEl) pointsEl.innerText = points;
-
-  for (let i = 0; i < 5; i++) {
-    spawnCoin();
-  }
-}
-
 // COIN
 function spawnCoin() {
   const container = document.getElementById("coin-container");
@@ -142,4 +117,94 @@ function spawnCoin() {
   container.appendChild(coin);
 
   setTimeout(() => coin.remove(), 1000);
+}
+
+const TASKS = {
+  twitter: {
+    url: "https://twitter.com/yourlink",
+    points: 10
+  },
+  telegram: {
+    url: "https://t.me/yourgroup",
+    points: 10
+  },
+  retweet: {
+    url: "https://twitter.com/yourpost",
+    points: 20
+  }
+};
+
+// load trạng thái cũ
+let completedTasks = JSON.parse(localStorage.getItem("tasks")) || {};
+
+updateUI();
+
+// bắt đầu task
+function startTask(btn, taskKey) {
+  const task = TASKS[taskKey];
+  if (completedTasks[taskKey]) return;
+
+  localStorage.setItem("task_" + taskKey, "started");
+
+  window.open(task.url, "_blank");
+
+  btn.innerText = "Checking...";
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.innerText = "Claim";
+    btn.disabled = false;
+
+    btn.onclick = () => claimTask(btn, taskKey);
+  }, 12000);
+}
+
+// claim task
+function claimTask(btn, taskKey) {
+  if (completedTasks[taskKey]) return;
+
+  const task = TASKS[taskKey];
+
+  completedTasks[taskKey] = true;
+  points += task.points;
+
+  localStorage.setItem("tasks", JSON.stringify(completedTasks));
+  localStorage.setItem("points", points);
+
+  btn.innerText = "Done ✅";
+  btn.disabled = true;
+
+  updateUI();
+}
+
+// update UI khi load lại
+const started = localStorage.getItem("task_" + key);
+
+if (completedTasks[key]) {
+  btn.innerText = "Done ✅";
+  btn.disabled = true;
+} else if (started) {
+  btn.innerText = "Claim";
+  btn.disabled = false;
+  btn.onclick = () => claimTask(btn, key);
+} else {
+  btn.innerText = "Start";
+  btn.disabled = false;
+  btn.onclick = () => startTask(btn, key);
+}
+
+let canWork = true;
+
+function produce() {
+  if (!canWork) return;
+
+  canWork = false;
+  points += 5;
+
+  localStorage.setItem("points", points);
+  updateUI();
+
+  setTimeout(() => {
+    canWork = true;
+  }, 60000);
 }
