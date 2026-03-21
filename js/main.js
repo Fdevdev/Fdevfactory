@@ -190,35 +190,44 @@ function claimTask(btn, taskKey) {
 }
 
 // update UI khi load lại
-const started = localStorage.getItem("task_" + key);
-
-if (completedTasks[key]) {
-  btn.innerText = "Done ✅";
-  btn.disabled = true;
-} else if (started) {
-  btn.innerText = "Claim";
-  btn.disabled = false;
-  btn.onclick = () => claimTask(btn, key);
-} else {
-  btn.innerText = "Start";
-  btn.disabled = false;
-  btn.onclick = () => startTask(btn, key);
-}
 
 let canWork = true;
 
-function produce() {
+function produce(btn) {
   if (!canWork) return;
 
   canWork = false;
-  points += 5;
+
+  // 🎲 random reward
+  const reward = Math.random() < 0.2 ? 20 : 5;
+  points += reward;
 
   localStorage.setItem("points", points);
   updateUI();
 
-  setTimeout(() => {
-    canWork = true;
-  }, 60000);
+  // 💰 hiệu ứng coin
+  for (let i = 0; i < 5; i++) {
+    spawnCoin();
+  }
+
+  // 💥 hiện reward
+  btn.innerText = "+ " + reward;
+
+  // ⏱ cooldown
+  let timeLeft = 60;
+  btn.disabled = true;
+
+  const interval = setInterval(() => {
+    btn.innerText = "Wait " + timeLeft + "s";
+    timeLeft--;
+
+    if (timeLeft < 0) {
+      clearInterval(interval);
+      btn.innerText = "Produce $FDEV";
+      btn.disabled = false;
+      canWork = true;
+    }
+  }, 1000);
 }
 
 function updateUI() {
@@ -249,3 +258,23 @@ function updateUI() {
 
   document.getElementById("points").innerText = points;
 }
+
+function generateLeaderboard() {
+  const board = document.querySelector(".card:last-child");
+
+  let html = "<h2>🏆 Leaderboard</h2>";
+
+  for (let i = 1; i <= 5; i++) {
+    const pts = Math.floor(Math.random() * 1000) + 100;
+    const addr = "0x" + Math.random().toString(16).substring(2, 6);
+
+    html += `<p>#${i} ${addr}... - ${pts} pts</p>`;
+  }
+
+  html += `<p style="color:orange">#YOU - ${points} pts</p>`;
+
+  board.innerHTML = html;
+}
+
+generateLeaderboard();
+setInterval(generateLeaderboard, 10000);

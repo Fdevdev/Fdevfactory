@@ -982,16 +982,27 @@ body {
 }
 
 .coin {
-  position: absolute;
+  position: fixed;
   font-size: 20px;
   animation: fly 1s ease-out forwards;
 }
 
 @keyframes fly {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-100px); opacity: 0; }
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px);
+    opacity: 0;
+  }
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px orange;
 }
 
 button:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
 }
