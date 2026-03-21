@@ -94,3 +94,21 @@ function copyContract() {
         btn.style.transform = "scale(1)";
     }, 1500);
 }
+
+let points = localStorage.getItem("points") || 0;
+document.getElementById("points").innerText = points;
+
+function completeTask(value) {
+  points = parseInt(points) + value;
+  localStorage.setItem("points", points);
+  document.getElementById("points").innerText = points;
+}
+
+function completeTask(value) {
+  if (this.clicked) return;
+  this.clicked = true;
+
+  points = parseInt(points) + value;
+  localStorage.setItem("points", points);
+  document.getElementById("points").innerText = points;
+}

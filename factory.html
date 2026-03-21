@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FDEV Factory</title>
+
+<style>
+body {
+  background: #0a0a0a;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+.card {
+  background: #111;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,180,0,0.2);
+}
+
+button {
+  background: orange;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+h1 {
+  color: orange;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🏭 FDEV Factory</h1>
+
+<div class="card">
+  <h2>👤 Your Profile</h2>
+  <p>Points: <span id="points">0</span></p>
+</div>
+
+<div class="card">
+  <h2>🎯 Tasks</h2>
+
+  <p>Follow Twitter (+10)</p>
+  <button onclick="completeTask(10)">Claim</button>
+
+  <p>Join Telegram (+10)</p>
+  <button onclick="completeTask(10)">Claim</button>
+
+  <p>Retweet Post (+20)</p>
+  <button onclick="completeTask(20)">Claim</button>
+
+</div>
+
+<div class="card">
+  <h2>🏆 Leaderboard</h2>
+  <p>#1 0x123... - 500 pts</p>
+  <p>#2 0x456... - 300 pts</p>
+  <p>#3 0x789... - 200 pts</p>
+</div>
+
+</div>
+
+<script>
+let points = 0;
+
+function completeTask(value) {
+  points += value;
+  document.getElementById("points").innerText = points;
+}
+</script>
+
+</body>
+</html>
