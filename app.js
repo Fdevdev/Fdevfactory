@@ -92,27 +92,40 @@ async function loadLeaderboard() {
     `;
   });
 
-  document.getElementById("leaderboard").innerHTML = html;
+  const board = document.getElementById("leaderboard");
+  if (board) board.innerHTML = html;
 }
 
 async function connectWallet() {
-  if (!window.solana || !window.solana.isPhantom) {
-    alert("Cài Phantom trước nha 😅");
+  // ✅ nếu có Phantom (PC hoặc app browser)
+  if (window.solana && window.solana.isPhantom) {
+    try {
+      const resp = await window.solana.connect();
+      window.APP.userWallet = resp.publicKey.toString();
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  } else {
+    // 📱 MOBILE → mở Phantom app
+    const url = window.location.href;
+    window.location.href =
+      "https://phantom.app/ul/browse/" + encodeURIComponent(url);
     return;
   }
 
-  try {
-    const resp = await window.solana.connect();
-    window.APP.userWallet = resp.publicKey.toString();
+  // save
+  localStorage.setItem("wallet", window.APP.userWallet);
 
-    localStorage.setItem("wallet", window.APP.userWallet);
-
-    document.getElementById("wallet").innerText =
-      window.APP.userWallet.slice(0, 4) + "..." + window.APP.userWallet.slice(-4);
-
-    await saveUser();
-    loadLeaderboard();
-  } catch (err) {
-    console.log(err);
+  // UI
+  const el = document.getElementById("wallet");
+  if (el) {
+    el.innerText =
+      window.APP.userWallet.slice(0, 4) +
+      "..." +
+      window.APP.userWallet.slice(-4);
   }
+
+  await saveUser();
+  loadLeaderboard();
 }
