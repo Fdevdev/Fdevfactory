@@ -951,3 +951,20 @@ body {
     margin: 20px auto 0;
   }
 }
+
+.enter-btn {
+  display: inline-block;
+  background: orange;
+  color: black;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(255,180,0,0.6);
+  transition: 0.3s;
+}
+
+.enter-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255,180,0,1);
+}
