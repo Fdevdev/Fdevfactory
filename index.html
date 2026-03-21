@@ -31,7 +31,7 @@
 <div class="nav-right">
 
   <button class="connect-wallet" onclick="connectWallet()">
-    Connect Wallet
+  <span id="wallet">Connect Wallet</span>
   </button>
 
   <a href="https://t.me/factory_fdev" target="_blank" class="icon-btn">
@@ -334,34 +334,10 @@ frameborder="0">
 
 </footer>
 
-<script src="js/main.js"></script>
-
 <div id="coin-container"></div>
 
-<script>
-async function connectWallet() {
-
-if (window.solana && window.solana.isPhantom) {
-    try {
-
-        const resp = await window.solana.connect();
-        const walletAddress = resp.publicKey.toString();
-
-        document.querySelector(".connect-wallet").innerText =
-        walletAddress.slice(0,4) + "..." + walletAddress.slice(-4);
-
-    } catch (err) {
-        console.log("User rejected connection");
-    }
-
-} else {
-
-    window.open("https://phantom.app/", "_blank");
-
-}
-
-}
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
 
 </body>
 </html>

@@ -66,9 +66,9 @@ h1 {
 
 <div class="nav-right">
   <button class="connect-wallet" onclick="connectWallet()">
-    Connect Wallet
+    <span id="wallet">Connect Wallet</span>
   </button>
-  <span id="walletAddress">Not connected</span>
+  <span id="points-nav">0</span>
 </div>
 
 </header>
@@ -89,7 +89,7 @@ h1 {
 
 <div class="card">
   <h2>⚡ Factory Work</h2>
-  <button onclick="produce(this)">Produce $FDEV</button>
+  <button onclick="addPoint()">Produce $FDEV</button>
 </div>
 <div class="box">
   <h3>🎯 Tasks</h3>
@@ -113,18 +113,15 @@ h1 {
 
 <div class="card">
   <h2>🏆 Leaderboard</h2>
-  <p>#1 0x123... - 500 pts</p>
-  <p>#2 0x456... - 300 pts</p>
-  <p>#3 0x789... - 200 pts</p>
+  <div id="leaderboard"></div>
 </div>
 
 </div>
 
 <div id="coin-container"></div>
 
-<script src="js/main.js"></script>
-
-<script src="https://unpkg.com/@walletconnect/ethereum-provider/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
