@@ -99,3 +99,25 @@ async function loadLeaderboard() {
 
   document.getElementById("leaderboard").innerHTML = html;
 }
+
+async function connectWallet() {
+  if (!window.solana || !window.solana.isPhantom) {
+    alert("Cài Phantom trước nha 😅");
+    return;
+  }
+
+  try {
+    const resp = await window.solana.connect();
+    userWallet = resp.publicKey.toString();
+
+    localStorage.setItem("wallet", userWallet);
+
+    document.getElementById("wallet").innerText =
+      userWallet.slice(0, 4) + "..." + userWallet.slice(-4);
+
+    await saveUser();
+    loadLeaderboard();
+  } catch (err) {
+    console.log(err);
+  }
+}

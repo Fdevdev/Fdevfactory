@@ -295,32 +295,6 @@ setInterval(generateLeaderboard, 10000);
 // ===== WALLET CONNECT =====
 let provider;
 
-async function connectWallet() {
-  try {
-    provider = await window.WalletConnectEthereumProvider.init({
-      projectId: "demo", // sau này đổi ID thật
-      chains: [1],
-      showQrModal: true
-    });
-
-    await provider.enable();
-
-    const accounts = await provider.request({
-      method: "eth_accounts"
-    });
-
-    const wallet = accounts[0];
-
-    localStorage.setItem("wallet", wallet);
-
-    showWallet();
-
-  } catch (err) {
-    console.log(err);
-    alert("Connect failed");
-  }
-}
-
 function showWallet() {
   const wallet = localStorage.getItem("wallet");
 
