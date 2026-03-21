@@ -677,7 +677,7 @@ transform:scale(0.95);
 
 .hero-overlay {
   position: relative;
-  z-index: 2;
+  z-index: 10;
 }
 
 .hero-video-section {
@@ -687,6 +687,8 @@ transform:scale(0.95);
   margin-bottom: -60px; /* kéo sát lại */
   overflow: hidden;
   border-radius: 12px;
+  position: relative;
+  z-index: 5;
 }
 
 .hero-video-section video {
@@ -698,6 +700,8 @@ transform:scale(0.95);
 
 .hero {
   margin-top: 0;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -867,7 +871,8 @@ body {
   padding: 30px;
   border-radius: 14px;
 
-  width: 260px;
+  width: 100%;
+  max-width: 100%;
 
   transition: all 0.35s ease;
 
@@ -1024,4 +1029,98 @@ button:active {
 #displayName {
   color: #ffae00;
   font-weight: bold;
+}
+
+.hero-video-section video {
+  pointer-events: none;
+}
+
+.enter-btn {
+  position: relative;
+  z-index: 20;
+}
+
+.container {
+  max-width: 900px;
+  margin: 60px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* CARD CHUNG */
+.card {
+  width: 100%;
+  background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 
+    0 0 20px rgba(255,180,0,0.2),
+    inset 0 0 10px rgba(255,180,0,0.05);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* GRID */
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* TITLE */
+h1 {
+  font-size: 32px;
+  color: #ffb300;
+  text-shadow: 0 0 10px rgba(255,180,0,0.6);
+}
+
+/* BUTTON */
+button {
+  background: linear-gradient(135deg, #ffb300, #ff8800);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+  box-shadow: 0 0 10px rgba(255,180,0,0.4);
+}
+
+button:hover {
+  transform: scale(1.08);
+}
+
+/* TASK LIST */
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #181818;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-top: 10px;
+  border: 1px solid rgba(255,180,0,0.15);
+}
+
+/* LEADERBOARD */
+#leaderboard div {
+  background: #1a1a1a;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 5px;
 }

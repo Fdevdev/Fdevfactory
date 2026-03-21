@@ -78,42 +78,54 @@ h1 {
 
 <h1>🏭 FDEV Factory</h1>
 
-<div class="card">
-  <p>Name: <span id="displayName">Guest</span></p>
+<div class="grid">
 
-  <input id="usernameInput" placeholder="Enter your name..." />
-  <button onclick="saveName()">Save</button>
+  <!-- PROFILE -->
+  <div class="card">
+    <p>Name: <span id="displayName">Guest</span></p>
 
-  <p>Points: <span id="points">0</span></p>
-</div>
+    <input id="usernameInput" placeholder="Enter your name..." />
+    <button onclick="saveName()">Save</button>
 
-<div class="card">
-  <h2>⚡ Factory Work</h2>
-  <button onclick="addPoint()">Produce $FDEV</button>
-</div>
-<div class="box">
-  <h3>🎯 Tasks</h3>
-
-  <div class="task">
-    <p>Follow Twitter (+10)</p>
-    <button onclick="startTask(this, 'twitter')">Start</button>
+    <p>Points: <span id="points">0</span></p>
   </div>
 
-  <div class="task">
-    <p>Join Telegram (+10)</p>
-    <button onclick="startTask(this, 'telegram')">Start</button>
-  </div>
-
-  <div class="task">
-    <p>Retweet Post (+20)</p>
-    <button onclick="startTask(this, 'retweet')">Start</button>
+  <!-- FARM -->
+  <div class="card">
+    <h2>⚡ Factory Work</h2>
+    <button onclick="addPoint()">Produce $FDEV</button>
   </div>
 
 </div>
 
-<div class="card">
-  <h2>🏆 Leaderboard</h2>
-  <div id="leaderboard"></div>
+<div class="grid">
+
+  <!-- TASK -->
+  <div class="card">
+    <h3>🎯 Tasks</h3>
+
+    <div class="task">
+      <span>Follow Twitter (+10)</span>
+      <button onclick="startTask(this, 'twitter')">Start</button>
+    </div>
+
+    <div class="task">
+      <span>Join Telegram (+10)</span>
+      <button onclick="startTask(this, 'telegram')">Start</button>
+    </div>
+
+    <div class="task">
+      <span>Retweet (+20)</span>
+      <button onclick="startTask(this, 'retweet')">Start</button>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="card">
+    <h3>🏆 Leaderboard</h3>
+    <div id="leaderboard"></div>
+  </div>
+
 </div>
 
 </div>
