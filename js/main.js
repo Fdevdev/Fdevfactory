@@ -102,7 +102,8 @@ document.getElementById("points").innerText = points;
 function completeTask(value, btn) {
   if (btn.disabled) return;
 
-  btn.disabled = true; // chặn spam
+  btn.disabled = true;
+  btn.innerText = "Done ✅";
 
   points += value;
   localStorage.setItem("points", points);
