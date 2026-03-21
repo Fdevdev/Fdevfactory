@@ -112,3 +112,29 @@ function completeTask(value) {
   localStorage.setItem("points", points);
   document.getElementById("points").innerText = points;
 }
+
+function work() {
+  points = parseInt(points) + 1;
+  localStorage.setItem("points", points);
+  document.getElementById("points").innerText = points;
+
+  for (let i = 0; i < 5; i++) {
+    spawnCoin();
+  }
+}
+
+function spawnCoin() {
+  const coin = document.createElement("div");
+  coin.className = "coin";
+  coin.innerText = "💰";
+
+  // random vị trí ngang
+  coin.style.left = Math.random() * window.innerWidth + "px";
+  coin.style.bottom = "0px";
+
+  document.getElementById("coin-container").appendChild(coin);
+
+  setTimeout(() => {
+    coin.remove();
+  }, 1000);
+}

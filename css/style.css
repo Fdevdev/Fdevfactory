@@ -969,3 +969,35 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(255,180,0,1);
 }
+
+#coin-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.coin {
+  position: absolute;
+  font-size: 20px;
+  animation: fly 1s ease-out forwards;
+}
+
+@keyframes fly {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+button:active {
+  transform: scale(0.9);
+}
