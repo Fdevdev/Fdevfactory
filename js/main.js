@@ -291,22 +291,3 @@ function generateLeaderboard() {
 
 generateLeaderboard();
 setInterval(generateLeaderboard, 10000);
-
-// ===== WALLET CONNECT =====
-let provider;
-
-function showWallet() {
-  const wallet = localStorage.getItem("wallet");
-
-  if (wallet) {
-    const el = document.getElementById("walletAddress");
-
-    if (el) {
-      el.innerText =
-        wallet.slice(0, 6) + "..." + wallet.slice(-4);
-    }
-  }
-}
-
-// load khi vào web
-showWallet();
