@@ -5,32 +5,18 @@ const SUPABASE_KEY = "sb_publishable_YPnjOSZeFNW9H3HRheIGXQ_EwGhrEOM"; // dán k
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ===== WALLET =====
-let userWallet = null;
+window.APP = {
+  userWallet: null
+};
 
 // connect Phantom
-async function connectWallet() {
-  try {
-    const resp = await window.solana.connect();
-    userWallet = resp.publicKey.toString();
-
-    localStorage.setItem("wallet", userWallet);
-
-    document.getElementById("wallet").innerText =
-      userWallet.slice(0, 4) + "..." + userWallet.slice(-4);
-
-    await saveUser();
-    loadLeaderboard();
-  } catch (err) {
-    alert("Chưa cài Phantom!");
-  }
-}
 
 // auto reconnect
-window.onload = async () => {
+window.addEventListener("DOMContentLoaded", async () => {
   if (localStorage.getItem("wallet")) {
-    userWallet = localStorage.getItem("wallet");
+    window.APP.userWallet = localStorage.getItem("wallet");
     document.getElementById("wallet").innerText =
-      userWallet.slice(0, 4) + "..." + userWallet.slice(-4);
+      window.APP.userWallet.slice(0, 4) + "..." + window.APP.userWallet.slice(-4)
 
     await saveUser();
     loadLeaderboard();
@@ -42,12 +28,12 @@ async function saveUser() {
   const { data } = await supabaseClient
     .from("users")
     .select("*")
-    .eq("wallet", userWallet);
+    .eq("wallet", window.APP.userWallet);
 
   if (data.length === 0) {
     await supabaseClient.from("users").insert([
       {
-        wallet: userWallet,
+        wallet: window.APP.userWallet,
         points: 0,
       },
     ]);
@@ -56,7 +42,7 @@ async function saveUser() {
 
 // ===== ADD POINT =====
 async function addPoint() {
-  if (!userWallet) {
+  if (!window.APP.userWallet) {
     alert("Connect wallet trước!");
     return;
   }
@@ -64,7 +50,7 @@ async function addPoint() {
   const { data } = await supabaseClient
     .from("users")
     .select("*")
-    .eq("wallet", userWallet)
+    .eq("wallet", window.APP.userWallet)
     .single();
 
   let newPoint = data.points + 1;
@@ -72,7 +58,7 @@ async function addPoint() {
   await supabaseClient
     .from("users")
     .update({ points: newPoint })
-    .eq("wallet", userWallet);
+    .eq("wallet", window.APP.userWallet);
 
   document.getElementById("points").innerText = newPoint;
   document.getElementById("points-nav").innerText = newPoint;
@@ -108,16 +94,34 @@ async function connectWallet() {
 
   try {
     const resp = await window.solana.connect();
-    userWallet = resp.publicKey.toString();
+    window.APP.userWallet = resp.publicKey.toString();
 
-    localStorage.setItem("wallet", userWallet);
+    localStorage.setItem("wallet", window.APP.userWallet);
 
     document.getElementById("wallet").innerText =
-      userWallet.slice(0, 4) + "..." + userWallet.slice(-4);
+      window.APP.userWallet.slice(0, 4) + "..." + window.APP.userWallet.slice(-4);
 
     await saveUser();
     loadLeaderboard();
   } catch (err) {
     console.log(err);
+  }
+}
+
+async function saveUser() {
+  if (!window.APP.userWallet) return;
+
+  const { data } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("wallet", window.APP.userWallet);
+
+  if (!data || data.length === 0) {
+    await supabaseClient.from("users").insert([
+      {
+        wallet: window.APP.userWallet,
+        points: 0,
+      },
+    ]);
   }
 }
