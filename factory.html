@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>FDEV Factory</title>
+
+<link rel="stylesheet" href="css/style.css">
 
 <style>
 body {
@@ -38,10 +43,30 @@ h1 {
   color: orange;
 }
 </style>
+
 </head>
 
 <body>
 
+<!-- NAVBAR -->
+<header class="navbar">
+
+<div class="logo" onclick="window.location.href='index.html'">
+  <img src="images/logo.webp">
+  <span>$FDEV</span>
+</div>
+
+<nav>
+<a href="index.html#story">Factory Story</a>
+<a href="index.html#tokenomics">Tokenomics</a>
+<a href="index.html#roadmap">Roadmap</a>
+<a href="index.html#buy">How to Buy</a>
+<a href="factory.html">Factory</a>
+</nav>
+
+</header>
+
+<!-- CONTENT -->
 <div class="container">
 
 <h1>🏭 FDEV Factory</h1>
@@ -49,6 +74,11 @@ h1 {
 <div class="card">
   <h2>👤 Your Profile</h2>
   <p>Points: <span id="points">0</span></p>
+</div>
+
+<div class="card">
+  <h2>⚡ Factory Work</h2>
+  <button onclick="work()">Produce $FDEV</button>
 </div>
 
 <div class="card">
@@ -75,10 +105,18 @@ h1 {
 </div>
 
 <script>
-let points = 0;
+let points = localStorage.getItem("points") || 0;
+document.getElementById("points").innerText = points;
 
 function completeTask(value) {
-  points += value;
+  points = parseInt(points) + value;
+  localStorage.setItem("points", points);
+  document.getElementById("points").innerText = points;
+}
+
+function work() {
+  points = parseInt(points) + 1;
+  localStorage.setItem("points", points);
   document.getElementById("points").innerText = points;
 }
 </script>
