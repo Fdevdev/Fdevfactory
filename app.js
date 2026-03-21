@@ -15,22 +15,31 @@ window.APP = {
 window.addEventListener("DOMContentLoaded", async () => {
   if (localStorage.getItem("wallet")) {
     window.APP.userWallet = localStorage.getItem("wallet");
-    document.getElementById("wallet").innerText =
-      window.APP.userWallet.slice(0, 4) + "..." + window.APP.userWallet.slice(-4)
+
+    const el = document.getElementById("wallet");
+
+    if (el && window.APP.userWallet) {
+      el.innerText =
+        window.APP.userWallet.slice(0, 4) +
+        "..." +
+        window.APP.userWallet.slice(-4);
+    }
 
     await saveUser();
     loadLeaderboard();
   }
-};
+});
 
 // ===== SAVE USER =====
 async function saveUser() {
+  if (!window.APP.userWallet) return;
+
   const { data } = await supabaseClient
     .from("users")
     .select("*")
     .eq("wallet", window.APP.userWallet);
 
-  if (data.length === 0) {
+  if (!data || data.length === 0) {
     await supabaseClient.from("users").insert([
       {
         wallet: window.APP.userWallet,
@@ -105,23 +114,5 @@ async function connectWallet() {
     loadLeaderboard();
   } catch (err) {
     console.log(err);
-  }
-}
-
-async function saveUser() {
-  if (!window.APP.userWallet) return;
-
-  const { data } = await supabaseClient
-    .from("users")
-    .select("*")
-    .eq("wallet", window.APP.userWallet);
-
-  if (!data || data.length === 0) {
-    await supabaseClient.from("users").insert([
-      {
-        wallet: window.APP.userWallet,
-        points: 0,
-      },
-    ]);
   }
 }
