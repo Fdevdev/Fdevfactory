@@ -148,15 +148,27 @@ function startTask(btn, taskKey) {
 
   window.open(task.url, "_blank");
 
-  btn.innerText = "Checking...";
   btn.disabled = true;
 
-  setTimeout(() => {
-    btn.innerText = "Claim";
-    btn.disabled = false;
+  const delay = Math.floor(Math.random() * 5000) + 10000; // 10–15s
+  let timeLeft = Math.floor(delay / 1000);
 
+  btn.innerText = "Checking... " + timeLeft + "s";
+
+  const countdown = setInterval(() => {
+    timeLeft--;
+    btn.innerText = "Checking... " + timeLeft + "s";
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+    }
+  }, 1000);
+
+  setTimeout(() => {
+    btn.innerText = "Claim Reward";
+    btn.disabled = false;
     btn.onclick = () => claimTask(btn, taskKey);
-  }, 12000);
+  }, delay);
 }
 
 // claim task
@@ -171,7 +183,7 @@ function claimTask(btn, taskKey) {
   localStorage.setItem("tasks", JSON.stringify(completedTasks));
   localStorage.setItem("points", points);
 
-  btn.innerText = "Done ✅";
+  btn.innerText = "Done ✅ +" + task.points;
   btn.disabled = true;
 
   updateUI();
@@ -207,4 +219,33 @@ function produce() {
   setTimeout(() => {
     canWork = true;
   }, 60000);
+}
+
+function updateUI() {
+  document.querySelectorAll(".task").forEach((el) => {
+    const text = el.innerText.toLowerCase();
+
+    let key = "";
+    if (text.includes("twitter")) key = "twitter";
+    if (text.includes("telegram")) key = "telegram";
+    if (text.includes("retweet")) key = "retweet";
+
+    const btn = el.querySelector("button");
+    const started = localStorage.getItem("task_" + key);
+
+    if (completedTasks[key]) {
+      btn.innerText = "Done ✅";
+      btn.disabled = true;
+    } else if (started) {
+      btn.innerText = "Claim Reward";
+      btn.disabled = false;
+      btn.onclick = () => claimTask(btn, key);
+    } else {
+      btn.innerText = "Start";
+      btn.disabled = false;
+      btn.onclick = () => startTask(btn, key);
+    }
+  });
+
+  document.getElementById("points").innerText = points;
 }
