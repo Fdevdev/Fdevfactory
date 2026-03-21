@@ -64,6 +64,13 @@ h1 {
 <a href="factory.html">Factory</a>
 </nav>
 
+<div class="nav-right">
+  <button class="connect-wallet" onclick="connectWallet()">
+    Connect Wallet
+  </button>
+  <span id="walletAddress">Not connected</span>
+</div>
+
 </header>
 
 <!-- CONTENT -->
@@ -116,6 +123,8 @@ h1 {
 <div id="coin-container"></div>
 
 <script src="js/main.js"></script>
+
+<script src="https://unpkg.com/@walletconnect/ethereum-provider/dist/index.umd.js"></script>
 
 </body>
 </html>

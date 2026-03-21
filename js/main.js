@@ -282,9 +282,57 @@ function updateUI() {
 
 function generateLeaderboard() {
   const name = localStorage.getItem("username") || "YOU";
+  const box = document.querySelector(".card:last-child");
 
-  html += `<p style="color:orange">👉 ${name} - ${points} pts</p>`;
+  if (box) {
+    box.innerHTML += `<p style="color:orange">👉 ${name} - ${points} pts</p>`;
+  }
 }
 
 generateLeaderboard();
 setInterval(generateLeaderboard, 10000);
+
+// ===== WALLET CONNECT =====
+let provider;
+
+async function connectWallet() {
+  try {
+    provider = await window.WalletConnectEthereumProvider.init({
+      projectId: "demo", // sau này đổi ID thật
+      chains: [1],
+      showQrModal: true
+    });
+
+    await provider.enable();
+
+    const accounts = await provider.request({
+      method: "eth_accounts"
+    });
+
+    const wallet = accounts[0];
+
+    localStorage.setItem("wallet", wallet);
+
+    showWallet();
+
+  } catch (err) {
+    console.log(err);
+    alert("Connect failed");
+  }
+}
+
+function showWallet() {
+  const wallet = localStorage.getItem("wallet");
+
+  if (wallet) {
+    const el = document.getElementById("walletAddress");
+
+    if (el) {
+      el.innerText =
+        wallet.slice(0, 6) + "..." + wallet.slice(-4);
+    }
+  }
+}
+
+// load khi vào web
+showWallet();
