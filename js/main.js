@@ -66,6 +66,8 @@ console.log(e);
 
 }
 
+}
+
 loadPrice();
 setInterval(loadPrice,10000);
 
@@ -94,7 +96,11 @@ function copyContract() {
 }
 
 let points = parseInt(localStorage.getItem("points")) || 0;
-document.getElementById("points").innerText = points;
+
+const pointsEl = document.getElementById("points");
+if (pointsEl) {
+  pointsEl.innerText = points;
+}
 
 // TASK
 function completeTask(value, btn) {
@@ -105,22 +111,27 @@ function completeTask(value, btn) {
 
   points += value;
   localStorage.setItem("points", points);
-  document.getElementById("points").innerText = points;
+
+  if (pointsEl) pointsEl.innerText = points;
 }
 
-// WORK (click game)
+// WORK
 function work() {
-  points = parseInt(points) + 1;
+  points += 1;
   localStorage.setItem("points", points);
-  document.getElementById("points").innerText = points;
+
+  if (pointsEl) pointsEl.innerText = points;
 
   for (let i = 0; i < 5; i++) {
     spawnCoin();
   }
 }
 
-// COIN EFFECT
+// COIN
 function spawnCoin() {
+  const container = document.getElementById("coin-container");
+  if (!container) return;
+
   const coin = document.createElement("div");
   coin.className = "coin";
   coin.innerText = "💰";
@@ -128,9 +139,7 @@ function spawnCoin() {
   coin.style.left = Math.random() * window.innerWidth + "px";
   coin.style.bottom = "0px";
 
-  document.getElementById("coin-container").appendChild(coin);
+  container.appendChild(coin);
 
-  setTimeout(() => {
-    coin.remove();
-  }, 1000);
+  setTimeout(() => coin.remove(), 1000);
 }

@@ -978,23 +978,20 @@ body {
   height: 100%;
   pointer-events: none;
   overflow: hidden;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .coin {
   position: absolute;
   font-size: 20px;
   animation: fly 1s ease-out forwards;
-  text-shadow: 0 0 10px gold;
 }
 
 @keyframes fly {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-150px);
-    opacity: 0;
-  }
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+
+button:active {
+  transform: scale(0.9);
 }
