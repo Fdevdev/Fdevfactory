@@ -4,6 +4,22 @@ const SUPABASE_KEY = "sb_publishable_YPnjOSZeFNW9H3HRheIGXQ_EwGhrEOM"; // dán k
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+window.addEventListener("DOMContentLoaded", async () => {
+  const wallet = localStorage.getItem("wallet");
+
+  if (!wallet) return;
+
+  window.APP.userWallet = wallet;
+
+  const el = document.getElementById("wallet");
+  if (el) {
+    el.innerText = wallet.slice(0,4) + "..." + wallet.slice(-4);
+  }
+
+  await saveUser();
+  loadLeaderboard();
+});
+
 // ===== WALLET =====
 window.APP = {
   userWallet: null
@@ -12,23 +28,42 @@ window.APP = {
 // connect Phantom
 
 // auto reconnect
-window.addEventListener("DOMContentLoaded", async () => {
-  if (localStorage.getItem("wallet")) {
-    window.APP.userWallet = localStorage.getItem("wallet");
-
-    const el = document.getElementById("wallet");
-
-    if (el && window.APP.userWallet) {
-      el.innerText =
-        window.APP.userWallet.slice(0, 4) +
-        "..." +
-        window.APP.userWallet.slice(-4);
-    }
-
-    await saveUser();
-    loadLeaderboard();
+async function produce(btn) {
+  if (!window.APP.userWallet) {
+    alert("Connect wallet trước!");
+    return;
+  let isWorking = false;
+  if (isWorking) return;
+  isWorking = true;
   }
-});
+
+  const { data } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("wallet", window.APP.userWallet)
+    .single();
+
+  let reward = Math.random() < 0.2 ? 20 : 5;
+  let newPoint = data.points + reward;
+
+  await supabaseClient
+    .from("users")
+    .update({ points: newPoint })
+    .eq("wallet", window.APP.userWallet);
+
+  document.getElementById("points").innerText = newPoint;
+  document.getElementById("points-nav").innerText = newPoint;
+
+  btn.innerText = "+ " + reward;
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.innerText = "Produce $FDEV";
+    btn.disabled = false;
+  }, 3000);
+
+  loadLeaderboard();
+}
 
 // ===== SAVE USER =====
 async function saveUser() {
@@ -44,35 +79,39 @@ async function saveUser() {
       {
         wallet: window.APP.userWallet,
         points: 0,
+        name: "Guest"
       },
     ]);
   }
+  if (data && data.length > 0) {
+  document.getElementById("displayName").innerText = data[0].name || "Guest";
+  document.getElementById("points").innerText = data[0].points;
+  document.getElementById("points-nav").innerText = data[0].points;
+}
 }
 
-// ===== ADD POINT =====
-async function addPoint() {
+async function saveName() {
+  const name = document.getElementById("usernameInput").value.trim();
+
+  if (name.length < 3) {
+    alert("Tên phải >= 3 ký tự");
+    return;
+  }
+
   if (!window.APP.userWallet) {
     alert("Connect wallet trước!");
     return;
   }
 
-  const { data } = await supabaseClient
-    .from("users")
-    .select("*")
-    .eq("wallet", window.APP.userWallet)
-    .single();
-
-  let newPoint = data.points + 1;
-
   await supabaseClient
     .from("users")
-    .update({ points: newPoint })
+    .update({ name: name })
     .eq("wallet", window.APP.userWallet);
 
-  document.getElementById("points").innerText = newPoint;
-  document.getElementById("points-nav").innerText = newPoint;
-  loadLeaderboard();
+  document.getElementById("displayName").innerText = name;
 }
+
+// ===== ADD POINT ====
 
 // ===== LEADERBOARD =====
 async function loadLeaderboard() {
@@ -87,8 +126,10 @@ async function loadLeaderboard() {
   data.forEach((user, index) => {
     html += `
       <div>
-        #${index + 1} - ${user.wallet.slice(0,4)}...${user.wallet.slice(-4)} : ${user.points}
-      </div>
+        #${index + 1} - 
+        ${user.name || user.wallet.slice(0,4)+"..."} 
+        : ${user.points}
+     </div>
     `;
   });
 
@@ -129,3 +170,9 @@ async function connectWallet() {
   await saveUser();
   loadLeaderboard();
 }
+
+setTimeout(() => {
+  btn.innerText = "Produce $FDEV";
+  btn.disabled = false;
+  isWorking = false;
+}, 3000);
