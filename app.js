@@ -28,14 +28,16 @@ window.APP = {
 // connect Phantom
 
 // auto reconnect
+let isWorking = false;
+
 async function produce(btn) {
   if (!window.APP.userWallet) {
     alert("Connect wallet trước!");
     return;
-  let isWorking = false;
+  }
+
   if (isWorking) return;
   isWorking = true;
-  }
 
   const { data } = await supabaseClient
     .from("users")
@@ -60,6 +62,7 @@ async function produce(btn) {
   setTimeout(() => {
     btn.innerText = "Produce $FDEV";
     btn.disabled = false;
+    isWorking = false;
   }, 3000);
 
   loadLeaderboard();
@@ -171,8 +174,56 @@ async function connectWallet() {
   loadLeaderboard();
 }
 
-setTimeout(() => {
-  btn.innerText = "Produce $FDEV";
-  btn.disabled = false;
-  isWorking = false;
-}, 3000);
+const TASKS = {
+  twitter: {
+    url: "https://twitter.com/factory_fdev",
+    points: 10
+  },
+  telegram: {
+    url: "https://t.me/factory_fdev",
+    points: 10
+  },
+  retweet: {
+    url: "https://twitter.com/factory_fdev",
+    points: 20
+  }
+};
+
+async function startTask(btn, key) {
+  const task = TASKS[key];
+
+  window.open(task.url, "_blank");
+
+  btn.innerText = "Claim";
+  btn.onclick = () => claimTask(btn, key);
+}
+
+async function claimTask(btn, key) {
+  if (!window.APP.userWallet) {
+    alert("Connect wallet trước!");
+    return;
+  }
+
+  const task = TASKS[key];
+
+  const { data } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("wallet", window.APP.userWallet)
+    .single();
+
+  let newPoint = data.points + task.points;
+
+  await supabaseClient
+    .from("users")
+    .update({ points: newPoint })
+    .eq("wallet", window.APP.userWallet);
+
+  document.getElementById("points").innerText = newPoint;
+  document.getElementById("points-nav").innerText = newPoint;
+
+  btn.innerText = "Done ✅";
+  btn.disabled = true;
+
+  loadLeaderboard();
+}
