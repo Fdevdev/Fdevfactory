@@ -4,10 +4,26 @@ const SUPABASE_KEY = "sb_publishable_YPnjOSZeFNW9H3HRheIGXQ_EwGhrEOM"; // dán k
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-window.addEventListener("DOMContentLoaded", async () => {
-  const wallet = localStorage.getItem("wallet");
+// ===== WALLET =====
+window.APP = {
+  userWallet: null
+};
 
-  if (!wallet) return;
+window.addEventListener("DOMContentLoaded", async () => {
+  let wallet = localStorage.getItem("wallet");
+
+// thử reconnect Phantom trước
+if (window.solana && window.solana.isPhantom) {
+  try {
+    const resp = await window.solana.connect({ onlyIfTrusted: true });
+    if (resp.publicKey) {
+      wallet = resp.publicKey.toString();
+      localStorage.setItem("wallet", wallet);
+    }
+  } catch (e) {}
+}
+
+if (!wallet) return;
 
   window.APP.userWallet = wallet;
 
@@ -19,11 +35,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   await saveUser();
   loadLeaderboard();
 });
-
-// ===== WALLET =====
-window.APP = {
-  userWallet: null
-};
 
 // connect Phantom
 
@@ -44,6 +55,11 @@ async function produce(btn) {
     .select("*")
     .eq("wallet", window.APP.userWallet)
     .single();
+
+  if (!data) {
+    isWorking = false;
+    return;
+  }
 
   let reward = Math.random() < 0.2 ? 20 : 5;
   let newPoint = data.points + reward;
@@ -141,27 +157,26 @@ async function loadLeaderboard() {
 }
 
 async function connectWallet() {
-  // ✅ nếu có Phantom (PC hoặc app browser)
   if (window.solana && window.solana.isPhantom) {
     try {
-      const resp = await window.solana.connect();
+      const resp = await window.solana.connect({
+        onlyIfTrusted: true
+      });
+
       window.APP.userWallet = resp.publicKey.toString();
     } catch (err) {
       console.log(err);
       return;
     }
   } else {
-    // 📱 MOBILE → mở Phantom app
     const url = window.location.href;
     window.location.href =
       "https://phantom.app/ul/browse/" + encodeURIComponent(url);
     return;
   }
 
-  // save
   localStorage.setItem("wallet", window.APP.userWallet);
 
-  // UI
   const el = document.getElementById("wallet");
   if (el) {
     el.innerText =
@@ -194,8 +209,14 @@ async function startTask(btn, key) {
 
   window.open(task.url, "_blank");
 
-  btn.innerText = "Claim";
-  btn.onclick = () => claimTask(btn, key);
+  btn.disabled = true;
+  btn.innerText = "Checking...";
+
+  setTimeout(() => {
+    btn.innerText = "Claim";
+    btn.disabled = false;
+    btn.onclick = () => claimTask(btn, key);
+  }, 3000); // 3s delay
 }
 
 async function claimTask(btn, key) {
