@@ -34,6 +34,7 @@ if (!wallet) return;
 
   await saveUser();
   loadLeaderboard();
+  loadTasksUI();
 });
 
 // connect Phantom
@@ -47,38 +48,43 @@ async function produce(btn) {
     return;
   }
 
-  if (isWorking) return;
-  isWorking = true;
-
   const { data } = await supabaseClient
     .from("users")
     .select("*")
     .eq("wallet", window.APP.userWallet)
     .single();
 
-  if (!data) {
-    isWorking = false;
+  if (!data) return;
+
+  const now = Date.now();
+  const last = new Date(data.last_work || 0).getTime();
+
+  // ⏱ cooldown 60s
+  if (now - last < 60000) {
+    const remain = Math.ceil((60000 - (now - last)) / 1000);
+    alert("Wait " + remain + "s");
     return;
   }
 
-  let reward = Math.random() < 0.2 ? 20 : 5;
-  let newPoint = data.points + reward;
+  let newPoint = data.points + 5;
 
   await supabaseClient
     .from("users")
-    .update({ points: newPoint })
+    .update({
+      points: newPoint,
+      last_work: new Date().toISOString()
+    })
     .eq("wallet", window.APP.userWallet);
 
   document.getElementById("points").innerText = newPoint;
   document.getElementById("points-nav").innerText = newPoint;
 
-  btn.innerText = "+ " + reward;
+  btn.innerText = "+5";
   btn.disabled = true;
 
   setTimeout(() => {
     btn.innerText = "Produce $FDEV";
     btn.disabled = false;
-    isWorking = false;
   }, 3000);
 
   loadLeaderboard();
@@ -190,18 +196,9 @@ async function connectWallet() {
 }
 
 const TASKS = {
-  twitter: {
-    url: "https://twitter.com/factory_fdev",
-    points: 10
-  },
-  telegram: {
-    url: "https://t.me/factory_fdev",
-    points: 10
-  },
-  retweet: {
-    url: "https://twitter.com/factory_fdev",
-    points: 20
-  }
+  twitter: { url: "https://x.com/factory_fdev", points: 10 },
+  telegram: { url: "https://t.me/fdevfactory", points: 10 },
+  retweet: { url: "https://x.com/factory_fdev", points: 20 }
 };
 
 async function startTask(btn, key) {
@@ -216,29 +213,44 @@ async function startTask(btn, key) {
     btn.innerText = "Claim";
     btn.disabled = false;
     btn.onclick = () => claimTask(btn, key);
-  }, 3000); // 3s delay
+  }, 10000); // 10s
 }
 
 async function claimTask(btn, key) {
-  if (!window.APP.userWallet) {
+  const wallet = window.APP.userWallet;
+
+  if (!wallet) {
     alert("Connect wallet trước!");
     return;
   }
 
-  const task = TASKS[key];
-
   const { data } = await supabaseClient
     .from("users")
     .select("*")
-    .eq("wallet", window.APP.userWallet)
+    .eq("wallet", wallet)
     .single();
 
-  let newPoint = data.points + task.points;
+  let tasks = data.tasks || {};
+
+  const today = new Date().toDateString();
+
+  // ❌ đã làm hôm nay rồi
+  if (tasks[key] === today) {
+    alert("Already claimed today");
+    return;
+  }
+
+  let newPoint = data.points + TASKS[key].points;
+
+  tasks[key] = today;
 
   await supabaseClient
     .from("users")
-    .update({ points: newPoint })
-    .eq("wallet", window.APP.userWallet);
+    .update({
+      points: newPoint,
+      tasks: tasks
+    })
+    .eq("wallet", wallet);
 
   document.getElementById("points").innerText = newPoint;
   document.getElementById("points-nav").innerText = newPoint;
@@ -247,4 +259,34 @@ async function claimTask(btn, key) {
   btn.disabled = true;
 
   loadLeaderboard();
+}
+
+async function loadTasksUI() {
+  const wallet = window.APP.userWallet;
+  if (!wallet) return;
+
+  const { data } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("wallet", wallet)
+    .single();
+
+  const tasks = data.tasks || {};
+  const today = new Date().toDateString();
+
+  document.querySelectorAll(".task").forEach((el) => {
+    const text = el.innerText.toLowerCase();
+    let key = "";
+
+    if (text.includes("twitter")) key = "twitter";
+    if (text.includes("telegram")) key = "telegram";
+    if (text.includes("retweet")) key = "retweet";
+
+    const btn = el.querySelector("button");
+
+    if (tasks[key] === today) {
+      btn.innerText = "Done ✅";
+      btn.disabled = true;
+    }
+  });
 }
