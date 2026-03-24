@@ -1124,3 +1124,10 @@ button:hover {
   border-radius: 8px;
   margin-top: 5px;
 }
+
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background: #111;
+}
