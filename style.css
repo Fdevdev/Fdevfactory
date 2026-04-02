@@ -820,7 +820,9 @@ transform:scale(0.95);
 .nav-right {
   display: flex;
   align-items: center;
+  justify-content: center; /* 🔥 thêm dòng này */
   gap: 8px;
+  flex-wrap: wrap; /* 🔥 tránh lệch */
 }
 
 .icon-btn {
@@ -1199,11 +1201,6 @@ body {
   justify-content: center;
 }
 
-.nav-right .connect-wallet {
-  width: 90%;
-  max-width: 300px;
-}
-
 .telegram { background: #229ED9; }
 .twitter { background: #1da1f2; }
 
@@ -1211,4 +1208,30 @@ body {
   padding: 6px 12px;
   font-size: 12px;
   min-width: auto;
+}
+
+.nav-right .connect-wallet,
+.nav-right .social-btn {
+  width: 140px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .nav-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-right .connect-wallet,
+  .nav-right .social-btn {
+    width: 90%;
+    max-width: 300px;
+  }
 }
