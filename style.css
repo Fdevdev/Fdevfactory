@@ -827,7 +827,7 @@ transform:scale(0.95);
 
 .icon-btn {
   background: linear-gradient(135deg, #f5a623, #ffb300);
-  color: #000;
+  color: black;
   padding: 8px 14px;
   border-radius: 12px;
   font-size: 12px;
@@ -1220,4 +1220,9 @@ body {
     max-width: 300px;
   }
 
+}
+
+.icon-btn {
+  color: black !important;
+  font-weight: bold;
 }
