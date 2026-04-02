@@ -443,8 +443,9 @@ flex-wrap:wrap;
 }
 
 .social-btn{
-width:180px;
-height:50px;
+  min-width:140px;
+  height:auto;
+  padding:10px 16px;
 
 display:flex;
 align-items:center;
@@ -792,10 +793,21 @@ transform:scale(0.95);
 
   .nav-right {
     display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column; /* 🔥 đổi sang dọc */
+    align-items: center;
+    width: 100%;
   }
+
+  .nav-right .social-btn {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .connect-wallet {
+    width: 90%;
+    max-width: 320px;
+  }
+
 
   .icon-btn,
   .connect-wallet {
@@ -808,12 +820,14 @@ transform:scale(0.95);
 .nav-right {
   display: flex;
   align-items: center;
+  justify-content: center; /* 🔥 thêm dòng này */
   gap: 8px;
+  flex-wrap: wrap; /* 🔥 tránh lệch */
 }
 
 .icon-btn {
   background: linear-gradient(135deg, #f5a623, #ffb300);
-  color: #000;
+  color: black;
   padding: 8px 14px;
   border-radius: 12px;
   font-size: 12px;
@@ -1154,4 +1168,61 @@ canvas {
 .game-card:hover {
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(255,174,0,0.8);
+}
+
+body {
+  overflow-x: hidden; /* chống tràn */
+}
+
+/* ===== NAVBAR CLEAN ===== */
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.nav-right .connect-wallet,
+.nav-right .social-btn {
+  width: 140px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.telegram {
+  background: #229ED9;
+}
+
+.twitter {
+  background: #1da1f2;
+}
+
+@media (max-width: 768px) {
+
+  .nav-right {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .nav-right .connect-wallet,
+  .nav-right .social-btn {
+    width: 90%;
+    max-width: 300px;
+  }
+
+}
+
+.icon-btn {
+  color: black !important;
+  font-weight: bold;
 }

@@ -261,6 +261,7 @@ function updateUI() {
     if (text.includes("retweet")) key = "retweet";
 
     const btn = el.querySelector("button");
+    if (!btn) return;
     const started = localStorage.getItem("task_" + key);
 
     if (completedTasks[key]) {
@@ -277,7 +278,8 @@ function updateUI() {
     }
   });
 
-  document.getElementById("points").innerText = points;
+  const el = document.getElementById("points");
+  if (el) el.innerText = points;
 }
 
 function generateLeaderboard() {
