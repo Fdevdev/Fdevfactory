@@ -1221,16 +1221,19 @@ body {
 @media (max-width: 768px) {
 
   .nav-right {
-    flex-direction: column;
+    flex-direction: row; /* 🔥 sửa tại đây */
+    justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 10px;
+    gap: 8px;
   }
 
   .nav-right .connect-wallet,
-  .nav-right .social-btn {
-    width: 90%;
-    max-width: 300px;
+  .nav-right .icon-btn {
+    width: auto;
+    max-width: none;
+    padding: 8px 10px;
+    font-size: 12px;
   }
 
 }
