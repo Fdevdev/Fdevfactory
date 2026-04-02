@@ -1242,3 +1242,12 @@ body {
   color: black !important;
   font-weight: bold;
 }
+
+.nav-right .connect-wallet,
+.nav-right .icon-btn {
+  height: 40px;
+  padding: 0 12px; /* 🔥 bỏ padding lệch */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
