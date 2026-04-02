@@ -12,10 +12,10 @@ window.APP = {
 window.addEventListener("DOMContentLoaded", async () => {
   let wallet = localStorage.getItem("wallet");
 
-// thử reconnect Phantom trước
+// reconnect Phantom first
 if (window.solana && window.solana.isPhantom) {
   try {
-    const resp = await window.solana.connect({ onlyIfTrusted: true });
+    const resp = await window.solana.connect({ onlyIfTrusted: true }).catch(() => null);
     if (resp.publicKey) {
       wallet = resp.publicKey.toString();
       localStorage.setItem("wallet", wallet);
@@ -261,7 +261,20 @@ async function claimTask(btn, key) {
 
 async function loadTasksUI() {
   const wallet = window.APP.userWallet;
-  if (!wallet) return;
+  if (!wallet) {
+  // chưa connect thì thôi, không return
+  } else {
+  window.APP.userWallet = wallet;
+
+  const el = document.getElementById("wallet");
+  if (el) {
+    el.innerText = wallet.slice(0,4) + "..." + wallet.slice(-4);
+  }
+
+  await saveUser();
+  loadLeaderboard();
+  loadTasksUI();
+  }
 
   const { data } = await supabaseClient
     .from("users")
