@@ -791,12 +791,25 @@ transform:scale(0.95);
     box-shadow: 0 0 10px rgba(255, 174, 0, 0.6);
   }
 
+  @media (max-width: 768px) {
+
   .nav-right {
-    display: flex;
-    flex-direction: column; /* 🔥 đổi sang dọc */
+    flex-direction: row; /* 🔥 đổi lại ngang */
+    justify-content: center;
     align-items: center;
     width: 100%;
+    gap: 8px;
   }
+
+  .nav-right .connect-wallet,
+  .nav-right .icon-btn {
+    width: auto; /* 🔥 bỏ full width */
+    max-width: none;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+}
 
   .nav-right .social-btn {
     width: 90%;
