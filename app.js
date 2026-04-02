@@ -165,9 +165,7 @@ async function loadLeaderboard() {
 async function connectWallet() {
   if (window.solana && window.solana.isPhantom) {
     try {
-      const resp = await window.solana.connect({
-        onlyIfTrusted: true
-      });
+      const resp = await window.solana.connect();
 
       window.APP.userWallet = resp.publicKey.toString();
     } catch (err) {
