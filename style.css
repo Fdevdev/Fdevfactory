@@ -797,17 +797,9 @@ transform:scale(0.95);
     width: 100%;
   }
 
-  .social-wrap {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .social-btn {
+  .nav-right .social-btn {
     width: 90%;
-    max-width: 320px;
+    max-width: 300px;
   }
 
   .connect-wallet {
@@ -1174,3 +1166,42 @@ canvas {
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(255,174,0,0.8);
 }
+
+body {
+  overflow-x: hidden; /* chống tràn */
+}
+
+/* ===== NAVBAR ===== */
+.nav-right .social-btn {
+  width: 120px;
+  height: 36px;
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+/* giống connect wallet */
+.nav-right .social-btn {
+  background: #1da1f2; /* giữ màu */
+  color: white;
+
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  height: auto;
+  width: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-right .connect-wallet {
+  width: 90%;
+  max-width: 300px;
+}
+
+.telegram { background: #229ED9; }
+.twitter { background: #1da1f2; }
