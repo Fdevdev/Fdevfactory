@@ -1,147 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<title>FDEV Factory Flight</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FDEV Factory</title>
+
+<link rel="stylesheet" href="css/style.css">
+
 <style>
 body {
-  margin: 0;
-  overflow: hidden;
-  background: #0b0b0b;
-  font-family: Arial;
+  background: #0a0a0a;
   color: white;
-}
-
-canvas {
-  display: block;
-  margin: auto;
-  background: #111;
-}
-
-#text {
-  position: absolute;
-  top: 20px;
-  width: 100%;
+  font-family: Arial;
   text-align: center;
-  font-size: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+.card {
+  background: #111;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,180,0,0.2);
+}
+
+button {
+  background: orange;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+h1 {
+  color: orange;
 }
 </style>
+
 </head>
+
 <body>
 
-<div id="text">tap to stay alive ⚡</div>
-<canvas id="gameCanvas"></canvas>
+<!-- NAVBAR -->
+<header class="navbar">
 
-<script>
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+<div class="logo" onclick="window.location.href='index.html'">
+  <img src="images/logo.webp">
+  <span>$FDEV</span>
+</div>
 
-canvas.width = 400;
-canvas.height = 600;
+<nav>
+<a href="index.html#story">Factory Story</a>
+<a href="index.html#tokenomics">Tokenomics</a>
+<a href="index.html#roadmap">Roadmap</a>
+<a href="index.html#buy">How to Buy</a>
+<a href="factory.html">Factory</a>
+</nav>
 
-let birdY = 300;
-let velocity = 0;
-let gravity = 0.5;
-let lift = -8;
+<div class="nav-right">
+  <button class="connect-wallet" onclick="connectWallet()">
+    <span id="wallet">Connect Wallet</span>
+  </button>
+  <span id="points-nav">0</span>
+</div>
 
-let pipes = [];
-let score = 0;
-let gameOver = false;
+</header>
 
-document.addEventListener("click", () => {
-  velocity = lift;
-  if (gameOver) restart();
-});
+<!-- CONTENT -->
+<div class="container">
 
-function createPipe() {
-  let gap = 150;
-  let top = Math.random() * 300 + 50;
+<h1>🏭 FDEV Factory</h1>
 
-  pipes.push({
-    x: canvas.width,
-    top: top,
-    bottom: top + gap
-  });
-}
+<!-- FACTORY STATUS -->
+<div style="margin-top:20px; text-align:center;">
 
-function update() {
-  if (gameOver) return;
+  <p style="opacity:0.5;">
+    Early access to the FDEV factory
+  </p>
 
-  velocity += gravity;
-  birdY += velocity;
+  <h2 style="color:#ffae00; margin-top:10px;">
+    ⚙️ Experiments are live
+  </h2>
 
-  if (birdY > canvas.height || birdY < 0) {
-    endGame();
-  }
+</div>
 
-  pipes.forEach(pipe => {
-    pipe.x -= 2;
+<!-- GAME SECTION -->
+<div style="margin-top:50px; text-align:center;">
 
-    if (pipe.x === 200) score++;
+  <h2>🎮 Factory Experiments</h2>
 
-    if (
-      pipe.x < 80 &&
-      pipe.x > 20 &&
-      (birdY < pipe.top || birdY > pipe.bottom)
-    ) {
-      endGame();
-    }
-  });
+  <p style="opacity:0.6;">
+    Play experiments • Earn energy • Climb leaderboard
+  </p>
 
-  if (pipes.length === 0 || pipes[pipes.length - 1].x < 200) {
-    createPipe();
-  }
+  <div class="game-grid">
 
-  pipes = pipes.filter(p => p.x > -50);
-}
+    <!-- GAME 1 -->
+    <div class="game-card" onclick="openGame('flappy')">
+      <h3>⚡ Flight Test</h3>
+      <p>live experiment</p>
+    </div>
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    <!-- GAME 2 LOCK -->
+    <div class="game-card" onclick="openGame('snake')">
+      <h3>🐍 Snake Lab</h3>
+      <p>Active experiment</p>
+    </div>
 
-  // bird
-  ctx.fillStyle = "#00ffcc";
-  ctx.fillRect(50, birdY, 20, 20);
+    <!-- GAME 3 LOCK -->
+    <div class="game-card" style="opacity:0.3;">
+      <h3>🏃 Escape Lab</h3>
+      <p>Unlock soon</p>
+    </div>
 
-  // pipes
-  ctx.fillStyle = "#ff0055";
-  pipes.forEach(pipe => {
-    ctx.fillRect(pipe.x, 0, 40, pipe.top);
-    ctx.fillRect(pipe.x, pipe.bottom, 40, canvas.height);
-  });
+    <p style="
+      opacity:0.7;
+      font-size:16px;
+      margin-top:20px;
+      color:#ffae00;
+    ">
+    ⚙️ More experiments unlocking soon
+    </p>
 
-  // score
-  ctx.fillStyle = "#fff";
-  ctx.font = "20px Arial";
-  ctx.fillText("Energy: " + score, 10, 30);
+  </div>
 
-  if (gameOver) {
-    ctx.fillStyle = "#fff";
-    ctx.font = "24px Arial";
-    ctx.fillText("you are early", 100, 250);
-    ctx.fillText("tap to restart", 100, 300);
-  }
-}
+</div>
 
-function loop() {
-  update();
-  draw();
-  requestAnimationFrame(loop);
-}
+<!-- GAME LOAD -->
+<div id="game-container" style="margin-top:30px;"></div>
 
-function endGame() {
-  gameOver = true;
-}
+</div>
 
-function restart() {
-  birdY = 300;
-  velocity = 0;
-  pipes = [];
-  score = 0;
-  gameOver = false;
-}
+<div id="coin-container"></div>
 
-loop();
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
 
 </body>
 </html>

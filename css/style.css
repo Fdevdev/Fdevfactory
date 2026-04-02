@@ -1131,3 +1131,27 @@ canvas {
   height: 100vh;
   background: #111;
 }
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
+  margin-top: 30px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.game-card {
+  background: #151515;
+  padding: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.3s;
+  border: 1px solid rgba(255,174,0,0.2);
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255,174,0,0.8);
+}

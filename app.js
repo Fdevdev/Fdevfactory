@@ -290,3 +290,44 @@ async function loadTasksUI() {
     }
   });
 }
+
+function openGame(type){
+  const container = document.getElementById("game-container");
+
+  // clear trước
+  container.innerHTML = "";
+
+  if(type === "flappy"){
+    container.innerHTML = `
+      <iframe src="flappy.html"
+        style="
+          width:100%;
+          max-width:400px;
+          height:600px;
+          border:none;
+          border-radius:12px;
+          display:block;
+          margin:0 auto;
+        ">
+      </iframe>
+    `;
+  }
+
+  if(type === "snake"){
+    container.innerHTML = `
+      <iframe src="snake.html"
+        style="
+          width:100%;
+          max-width:800px;
+          height:800px;
+          border:none;
+          border-radius:12px;
+          display:block;
+          margin:0 auto;
+        ">
+      </iframe>
+    `;
+  }
+
+  container.scrollIntoView({ behavior: "smooth" });
+}

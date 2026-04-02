@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FDEV Snake</title>
+
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: white;
+  text-align: center;
+  font-family: Arial;
+}
+
+h1 {
+  color: #ffae00;
+}
+
+canvas {
+  background: #111;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+/* 🎮 mobile controls */
+.controls {
+  margin-top: 10px;
+}
+
+.controls button {
+  background: #222;
+  border: 1px solid #ffae00;
+  color: #ffae00;
+  padding: 10px 15px;
+  margin: 3px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>🐍 Snake Lab</h1>
+<p style="opacity:0.6;">consume energy • don't crash</p>
+
+<canvas id="game"></canvas>
+
+<!-- 🎮 mobile controls -->
+<div class="controls">
+  <button onclick="setDir('up')">⬆️</button><br>
+  <button onclick="setDir('left')">⬅️</button>
+  <button onclick="setDir('down')">⬇️</button>
+  <button onclick="setDir('right')">➡️</button>
+</div>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+const grid = 20;
+let snake = [{x: 160, y: 160}];
+let dx = grid;
+let dy = 0;
+let food = {x: 200, y: 200};
+let score = 0;
+let speed = 7;
+let gameOver = false;
+
+// ✅ responsive canvas
+function resizeCanvas(){
+  let size;
+
+  if(window.innerWidth < 700){
+    // 📱 mobile
+    size = window.innerWidth - 40;
+  } else {
+    // 💻 PC
+    size = 500;
+  }
+
+  canvas.width = size;
+  canvas.height = size;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+function loop(){
+  setTimeout(() => {
+
+    requestAnimationFrame(loop);
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    if(gameOver){
+      ctx.fillStyle = "rgba(0,0,0,0.7)";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      ctx.fillStyle = "#fff";
+      ctx.font = "24px Arial";
+      ctx.fillText("GAME OVER", canvas.width/2 - 80, canvas.height/2);
+
+      ctx.font = "14px Arial";
+      ctx.fillText("Tap to restart", canvas.width/2 - 60, canvas.height/2 + 30);
+      return;
+    }
+
+    let head = {
+      x: snake[0].x + dx,
+      y: snake[0].y + dy
+    };
+
+    // đụng tường
+    if(
+      head.x < 0 ||
+      head.x >= canvas.width ||
+      head.y < 0 ||
+      head.y >= canvas.height
+    ){ 
+      gameOver = true;
+      return;
+    }
+
+    snake.unshift(head);
+
+    // ăn food
+    if(head.x === food.x && head.y === food.y){
+      score++;
+      food.x = Math.floor(Math.random()*(canvas.width/grid))*grid;
+      food.y = Math.floor(Math.random()*(canvas.height/grid))*grid;
+
+      if(score % 5 === 0 && speed > 3){
+        speed--;
+      }
+    } else {
+      snake.pop();
+    }
+
+    // đụng thân
+    for(let i = 1; i < snake.length; i++){
+      if(head.x === snake[i].x && head.y === snake[i].y){
+        gameOver = true;
+        return;
+      }
+    }
+
+    // food
+    ctx.fillStyle = "#ff0055";
+    ctx.fillRect(food.x, food.y, grid-2, grid-2);
+
+    // snake
+    ctx.fillStyle = "#00ffcc";
+    snake.forEach(cell => {
+      ctx.fillRect(cell.x, cell.y, grid-2, grid-2);
+    });
+
+    // score
+    ctx.fillStyle = "#fff";
+    ctx.font = "16px Arial";
+    ctx.fillText("Energy: " + score, 10, 20);
+
+  }, 1000 / speed);
+}
+
+// keyboard
+document.addEventListener("keydown", e => {
+  if(e.key === "ArrowLeft" && dx === 0){ dx = -grid; dy = 0; }
+  if(e.key === "ArrowRight" && dx === 0){ dx = grid; dy = 0; }
+  if(e.key === "ArrowUp" && dy === 0){ dy = -grid; dx = 0; }
+  if(e.key === "ArrowDown" && dy === 0){ dy = grid; dx = 0; }
+});
+
+// mobile buttons
+function setDir(dir){
+  if(dir === "left" && dx === 0){ dx = -grid; dy = 0; }
+  if(dir === "right" && dx === 0){ dx = grid; dy = 0; }
+  if(dir === "up" && dy === 0){ dy = -grid; dx = 0; }
+  if(dir === "down" && dy === 0){ dy = grid; dx = 0; }
+}
+
+// restart
+canvas.addEventListener("click", () => {
+  if(gameOver){
+    snake = [{x:160,y:160}];
+    dx = grid;
+    dy = 0;
+    score = 0;
+    speed = 7;
+    gameOver = false;
+  }
+});
+
+loop();
+</script>
+
+</body>
+</html>

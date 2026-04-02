@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FDEV Factory Flight</title>
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #0b0b0b;
+  font-family: Arial;
+  color: white;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+  background: #111;
+}
+
+#text {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<div id="text">Tap to restart ⚡</div>
+<canvas id="gameCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = 400;
+canvas.height = 600;
+
+let birdY = 300;
+let velocity = 0;
+let gravity = 0.5;
+let lift = -8;
+
+let pipes = [];
+let score = 0;
+let gameOver = false;
+
+document.addEventListener("click", () => {
+  velocity = lift;
+  if (gameOver) restart();
+});
+
+function createPipe() {
+  let gap = 150;
+  let top = Math.random() * 300 + 50;
+
+  pipes.push({
+    x: canvas.width,
+    top: top,
+    bottom: top + gap
+  });
+}
+
+function update() {
+  if (gameOver) return;
+
+  velocity += gravity;
+  birdY += velocity;
+
+  if (birdY > canvas.height || birdY < 0) {
+    endGame();
+  }
+
+  pipes.forEach(pipe => {
+    pipe.x -= 2;
+
+    if (pipe.x === 200) score++;
+
+    if (
+      pipe.x < 80 &&
+      pipe.x > 20 &&
+      (birdY < pipe.top || birdY > pipe.bottom)
+    ) {
+      endGame();
+    }
+  });
+
+  if (pipes.length === 0 || pipes[pipes.length - 1].x < 200) {
+    createPipe();
+  }
+
+  pipes = pipes.filter(p => p.x > -50);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // bird
+  ctx.fillStyle = "#00ffcc";
+  ctx.fillRect(50, birdY, 20, 20);
+
+  // pipes
+  ctx.fillStyle = "#ff0055";
+  pipes.forEach(pipe => {
+    ctx.fillRect(pipe.x, 0, 40, pipe.top);
+    ctx.fillRect(pipe.x, pipe.bottom, 40, canvas.height);
+  });
+
+  // score
+  ctx.fillStyle = "#fff";
+  ctx.font = "20px Arial";
+  ctx.fillText("Energy: " + score, 10, 30);
+
+  if (gameOver) {
+    ctx.fillStyle = "#fff";
+    ctx.font = "24px Arial";
+    ctx.fillText("Tap to restart", 100, 300);
+  }
+}
+
+function loop() {
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+function endGame() {
+  gameOver = true;
+}
+
+function restart() {
+  birdY = 300;
+  velocity = 0;
+  pipes = [];
+  score = 0;
+  gameOver = false;
+}
+
+loop();
+</script>
+
+</body>
+</html>

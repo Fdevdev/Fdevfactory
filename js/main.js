@@ -291,3 +291,27 @@ function generateLeaderboard() {
 
 generateLeaderboard();
 setInterval(generateLeaderboard, 10000);
+
+function openGame(type){
+  const container = document.getElementById("game-container");
+
+  if(type === "flappy"){
+    container.innerHTML = `
+      <iframe src="flappy.html" width="400" height="600" style="border:none;"></iframe>
+    `;
+  }
+
+  if(type === "clicker"){
+    container.innerHTML = `
+      <h2>💰 Coin Miner</h2>
+      <button onclick="alert('coming soon')">Produce</button>
+    `;
+  }
+
+  if(type === "runner"){
+    container.innerHTML = `
+      <h2>🏃 Escape Lab</h2>
+      <p>coming soon...</p>
+    `;
+  }
+}
